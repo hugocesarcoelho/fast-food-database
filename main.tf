@@ -83,10 +83,10 @@ output "web-address" {
 }
 
 
-resource "random_password" "db_password" {
-  length  = 16
-  special = false
-}
+# resource "random_password" "db_password" {
+#   length  = 16
+#   special = false
+# }
 
 # resource "aws_secretsmanager_secret" "db_secret" {
 #   name = "mysql-rds-password-secret"
@@ -116,7 +116,7 @@ resource "aws_security_group" "rds-sg" {
 }
 
 resource "aws_db_instance" "mysql" {
-  identifier             = "fiap-mysql-db"
+  identifier             = "fiap-mysql-db-2"
   engine                 = "mysql"
   engine_version         = "8.0"
   instance_class         = "db.t3.micro"

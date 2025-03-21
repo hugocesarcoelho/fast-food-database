@@ -88,14 +88,14 @@ resource "random_password" "db_password" {
   special = false
 }
 
-resource "aws_secretsmanager_secret" "db_secret" {
-  name = "mysql-rds-password-secret"
-}
+# resource "aws_secretsmanager_secret" "db_secret" {
+#   name = "mysql-rds-password-secret"
+# }
 
-resource "aws_secretsmanager_secret_version" "db_secret_version" {
-  secret_id     = aws_secretsmanager_secret.db_secret.id
-  secret_string = random_password.db_password.result
-}
+# resource "aws_secretsmanager_secret_version" "db_secret_version" {
+#   secret_id     = aws_secretsmanager_secret.db_secret.id
+#   secret_string = random_password.db_password.result
+# }
 
 resource "aws_security_group" "rds-sg" {
   name = "${random_pet.sg.id}-rds-sg"

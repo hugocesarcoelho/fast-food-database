@@ -78,9 +78,9 @@ data "aws_ami" "ubuntu" {
 #   }
 # }
 
-output "web-address" {
-  value = "${aws_instance.web.public_dns}:8080"
-}
+# output "web-address" {
+#   value = "${aws_instance.web.public_dns}:8080"
+# }
 
 
 resource "random_password" "db_password" {

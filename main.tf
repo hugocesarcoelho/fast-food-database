@@ -12,8 +12,6 @@ resource "aws_secretsmanager_secret_version" "db_secret_version" {
   secret_string = random_password.db_password.result
 }
 
-resource "random_pet" "sg" {}
-
 resource "aws_security_group" "rds-sg" {
   name = "${random_pet.sg.id}-rds-sg"
 

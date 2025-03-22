@@ -96,3 +96,46 @@ resource "aws_db_instance" "mysql" {
 output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
 }
+
+
+resource "aws_security_group" "redis-sg" {
+  name = "${random_pet.sg.id}-redis-sg"
+
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_elasticache_subnet_group" "redis" {
+  name       = "redis-subnet-group"
+  subnet_ids = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"]
+}
+
+resource "aws_elasticache_cluster" "redis" {
+  cluster_id           = "fiap-redis-cluster"
+  engine              = "redis"
+  node_type           = "cache.t3.micro"
+  num_cache_nodes     = 1
+  parameter_group_name = "default.redis7"
+  port                = 6379
+  security_group_ids  = [aws_security_group.redis-sg.id]
+  subnet_group_name   = aws_elasticache_subnet_group.redis.name
+
+  tags = {
+    Name = "fiap-redis"
+  }
+}
+
+output "redis_endpoint" {
+  value = aws_elasticache_cluster.redis.cache_nodes[0].address
+}

@@ -107,7 +107,7 @@ resource "aws_security_group" "redis-sg" {
 # Subnet Group for Redis
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "redis-subnet-group"
-  subnet_ids = ["subnet-0e6be6f8c1d2d0232"] # Replace with actual subnet IDs
+  subnet_ids = ["subnet-0e6be6f8c1d2d0232", "subnet-051df09ed3adb7510", "subnet-002e1c254379eae5b", "subnet-0a40b6e40973981bf", "subnet-007d0f8c197010954", "subnet-0194eafe9eca9838b"] # Replace with actual subnet IDs
 }
 
 # Redis Cluster

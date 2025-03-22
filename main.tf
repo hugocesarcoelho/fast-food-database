@@ -123,7 +123,7 @@ resource "aws_db_instance" "mysql" {
   allocated_storage      = 20
   storage_type           = "gp2"
   username               = "admin"
-  password               = "admin"
+  password               = random_password.db_password.result
   db_name                = "fiapdb"
   skip_final_snapshot    = true
   publicly_accessible    = true

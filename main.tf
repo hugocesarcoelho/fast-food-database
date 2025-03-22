@@ -26,7 +26,6 @@ provider "aws" {
 
 resource "random_pet" "sg" {}
 
-
 # Generate a random password for RDS
 resource "random_password" "db_password" {
   length  = 16
@@ -114,13 +113,13 @@ resource "aws_elasticache_subnet_group" "redis" {
 # Redis Cluster
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = "fiap-redis-cluster"
-  engine              = "redis"
-  node_type           = "cache.t3.micro"
-  num_cache_nodes     = 1
+  engine               = "redis"
+  node_type            = "cache.t3.micro"
+  num_cache_nodes      = 1
   parameter_group_name = "default.redis7"
-  port                = 6379
-  security_group_ids  = [aws_security_group.redis-sg.id]
-  subnet_group_name   = aws_elasticache_subnet_group.redis.name
+  port                 = 6379
+  security_group_ids   = [aws_security_group.redis-sg.id]
+  subnet_group_name    = aws_elasticache_subnet_group.redis.name
 
   tags = {
     Name = "fiap-redis"

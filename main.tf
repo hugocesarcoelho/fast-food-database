@@ -26,11 +26,14 @@ provider "aws" {
 
 resource "random_pet" "sg" {}
 
+
+# Generate a random password for RDS
 resource "random_password" "db_password" {
   length  = 16
   special = false
 }
 
+# Store the password in AWS Secrets Manager
 resource "aws_secretsmanager_secret" "db_secret" {
   name = "mysql-rds-password"
 }
@@ -40,6 +43,7 @@ resource "aws_secretsmanager_secret_version" "db_secret_version" {
   secret_string = random_password.db_password.result
 }
 
+# Security Group for RDS
 resource "aws_security_group" "rds-sg" {
   name = "${random_pet.sg.id}-rds-sg"
 
@@ -58,6 +62,7 @@ resource "aws_security_group" "rds-sg" {
   }
 }
 
+# Create an RDS MySQL Instance
 resource "aws_db_instance" "mysql" {
   identifier             = "fiap-mysql-db-2"
   engine                 = "mysql"
@@ -81,7 +86,7 @@ output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
 }
 
-
+# Security Group for Redis
 resource "aws_security_group" "redis-sg" {
   name = "${random_pet.sg.id}-redis-sg"
 
@@ -100,11 +105,13 @@ resource "aws_security_group" "redis-sg" {
   }
 }
 
+# Subnet Group for Redis
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "redis-subnet-group"
-  subnet_ids = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"]
+  subnet_ids = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"] # Replace with actual subnet IDs
 }
 
+# Redis Cluster
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = "fiap-redis-cluster"
   engine              = "redis"

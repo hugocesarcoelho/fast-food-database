@@ -60,7 +60,7 @@ resource "aws_db_instance" "mysql" {
   allocated_storage      = 20
   storage_type           = "gp2"
   username               = "admin"
-  password               = random_password.db_password.result
+  password               = "Admin123$%@2"
   db_name                = "fiapdb"
   skip_final_snapshot    = true
   publicly_accessible    = true
@@ -73,7 +73,4 @@ resource "aws_db_instance" "mysql" {
 
 output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
-}
-output "db_password" {
-  value = random_password.db_password.result
 }

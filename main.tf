@@ -74,6 +74,6 @@ resource "aws_db_instance" "mysql" {
 output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
 }
-output "rds_endpoint" {
+output "db_password" {
   value = random_password.db_password.result
 }
